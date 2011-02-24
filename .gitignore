@@ -1,0 +1,3 @@
+# ignore vim files
+.*.swp
+.*.un~
