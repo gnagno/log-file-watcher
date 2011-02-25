@@ -34,8 +34,10 @@ app.configure('production', function(){
 app.get('/:filename', function(req, res){
   filename = req.params.filename
   res.render('index', {
+    locals: {
       title: 'Log file watcher',
       filename: filename 
+	};
   });
 });
 
