@@ -31,13 +31,13 @@ app.configure('production', function(){
 
 // Routes
 
-app.get('/:filename', function(req, res){
+app.get('/:filename', function(req, res, next){
   filename = req.params.filename
   res.render('index', {
     locals: {
       title: 'Log file watcher',
       filename: filename 
-	};
+	}
   });
 });
 
