@@ -54,6 +54,37 @@ app.get('/poll/:filename', function(req, res){
   });
 });
 
+
+
+// set up socket.io
+var io = require('socket.io');
+var ws_server = io.listen(app, {
+	resource: 'watch',
+	flashPolicyServer: false,
+	transports: [
+		'websocket',
+		'htmlfile',
+		'xhr-multipart',
+		'xhr-polling'
+	]
+});
+
+ws_server.on('connection', function(client) {
+  // there, client should be stored depending on what files they are
+  // watching
+  client.on('message', function(msg) {
+	console.log('got message %s from client %s', msg, client.sessionId);
+  })
+  client.on('disconnect', function() {
+	// there client should be removed from the list of client watching
+	// a given file
+  });
+
+  // say hello
+  client.send('hello you');
+});
+
+
 // Only listen on $ node app.js
 
 if (!module.parent) {
