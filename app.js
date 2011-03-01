@@ -1,3 +1,23 @@
+#!/usr/bin/env node
+
+/**
+ * A command line tool that spawns a webserver allowing to look for
+ * log files and watch them in real time as they evolve
+ *
+ * Command syntax
+ * node app.js [<file> [as <alias>]] [<port>]
+ *
+ * <file> is a log file that should be available for online watching.
+ * you can optionnaly define an alias for this file.
+ * multiple <file>s can be specified. 
+ *
+ * <port> is the port on which the webserver+websocket server will listen.
+ * by default 3000
+ * EXAMPLE:
+ * node app.js /var/log/apache2/access.log as access \
+ *				/var/log/apache2/error.log as error 3000
+ */
+
 
 /**
  * Module dependencies.
@@ -32,6 +52,15 @@ app.configure('production', function(){
 
 // Routes
 
+// default route for root page. without it, you get an error.
+app.get('/', function(req, res, next) {
+	res.render('landing', {
+		layout: false,
+		locals: {
+			// i would like a list of files we're able to watch
+		}
+	})
+});
 app.get('/:filename', function(req, res, next){
   filename = req.params.filename
   res.render('index', {
