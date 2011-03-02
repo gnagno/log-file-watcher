@@ -1,4 +1,4 @@
-var parser = require('../lib/parseArgs');
+var parser = require('../lib/arguments');
 console.log(process.argv);
 console.log('commencing parsing');
 try {
