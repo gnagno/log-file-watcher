@@ -20,7 +20,11 @@ var socket = new io.Socket(host, {
 socket.connect();
 socket.on('connect', function() {
   console.log('connected');
-  this.send('hello');
+  // we send the names or aliases of the files we'd like to watch
+  // for now we look for the filename in the path of the page we're in
+  var filename = document.location.pathname.substr(1);
+  // the substring is to get rid of the leading slash
+  this.send(filename);
 });
 socket.on('message', function(message) {
   console.log("got message %s", message);

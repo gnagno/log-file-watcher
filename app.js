@@ -28,6 +28,23 @@ var express = require('express'),
     sys     = require('sys'),
     path    = require('path');
 
+// parse arguments
+var arguments = require('./lib/arguments');
+
+var parameters;
+try {
+	parameters = arguments.parseArgs();
+	if(parameters.help) {
+		arguments.printUsage();
+		process.exit(0);
+	}
+}
+catch(e) {
+	console.log('could not parse arguments: %s', e.message);
+	arguments.printUsage();
+	process.exit(1);
+}
+
 var app = module.exports = express.createServer();
 
 // Configuration
