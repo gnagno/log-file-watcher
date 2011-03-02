@@ -29,6 +29,10 @@ socket.on('connect', function() {
 socket.on('message', function(message) {
   console.log("got message %s", message);
 });
+socket.on('message', function(message) {
+  if(typeof message !== 'object') return;
+  console.log('new line in %s: %s', message.file, message.line);
+});
 socket.on('disconnect', function() {
   console.log('disconnected');
 });

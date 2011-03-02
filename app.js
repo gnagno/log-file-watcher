@@ -44,6 +44,7 @@ catch(e) {
 	arguments.printUsage();
 	process.exit(1);
 }
+console.log('watching %s', sys.inspect(parameters.files));
 
 var app = module.exports = express.createServer();
 
@@ -78,6 +79,11 @@ app.get('/', function(req, res, next) {
 		}
 	})
 });
+// this route doesn't allow us to watch absolute paths filename
+// because of the slashes. we should do it we a regex, but would
+// need a bit of express doc reading
+//
+// so for now it only works with aliases =)
 app.get('/:filename', function(req, res, next){
   filename = req.params.filename
   res.render('index', {
@@ -114,16 +120,30 @@ var ws_server = io.listen(app, {
 		'xhr-polling'
 	]
 });
-
+var LogWatcher = require('./lib/LogWatcher');
 ws_server.on('connection', function(client) {
   // there, client should be stored depending on what files they are
   // watching
+  client.watchers = [];
   client.on('message', function(msg) {
 	console.log('got message %s from client %s', msg, client.sessionId);
+
+	// if this doesn't seem to be a file to start watching, leave
+	if(typeof msg !== 'string' || !(msg in parameters.files)) return
+
+	var watcher = new LogWatcher(parameters.files[msg]);
+	watcher.on('line', function(line) {
+	  client.send({file: msg, line: line});
+	});
+	client.watchers.push(watcher);
   })
   client.on('disconnect', function() {
 	// there client should be removed from the list of client watching
 	// a given file
+	
+	while(client.watchers.length) {
+	  client.watchers.pop().close();
+	}
   });
 
   // say hello
@@ -134,6 +154,6 @@ ws_server.on('connection', function(client) {
 // Only listen on $ node app.js
 
 if (!module.parent) {
-  app.listen(3000);
+  app.listen(parameters.port || 3000);
   console.log("Express server listening on port %d", app.address().port)
 }
