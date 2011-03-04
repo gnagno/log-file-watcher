@@ -38,13 +38,13 @@ try {
 		arguments.printUsage();
 		process.exit(0);
 	}
+	console.log('watching', parameters.files);
 }
 catch(e) {
 	console.log('could not parse arguments: %s', e.message);
 	arguments.printUsage();
 	process.exit(1);
 }
-console.log('watching %s', sys.inspect(parameters.files));
 
 var app = module.exports = express.createServer();
 
