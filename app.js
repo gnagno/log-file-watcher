@@ -41,9 +41,13 @@ try {
 	console.log('watching', parameters.files);
 }
 catch(e) {
-	console.log('could not parse arguments: %s', e.message);
-	arguments.printUsage();
-	process.exit(1);
+	if(e instanceof SyntaxError) {
+		console.log('could not parse arguments: %s', e.message);
+		arguments.printUsage();
+		process.exit(1);
+	}
+	console.log(e.message)
+	process.exit(2);
 }
 
 var app = module.exports = express.createServer();
