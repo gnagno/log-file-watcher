@@ -49,6 +49,15 @@ catch(e) {
 	console.log(e.message)
 	process.exit(2);
 }
+/**
+ * parameters is on object of this form
+ * {
+ *   port: <int:optional>
+ *   files: {
+ *	   <alias>: <path>
+ *   }
+ * }
+ */
 
 var app = module.exports = express.createServer();
 
@@ -80,6 +89,7 @@ app.get('/', function(req, res, next) {
 		layout: false,
 		locals: {
 			// i would like a list of files we're able to watch
+			files: parameters.files
 		}
 	})
 });
@@ -128,7 +138,7 @@ var LogWatcher = require('./lib/LogWatcher');
 ws_server.on('connection', function(client) {
   // there, client should be stored depending on what files they are
   // watching
-  client.watchers = [];
+  client.watchers = []; ///< a list of file watchers
   client.on('message', function(msg) {
 	console.log('got message %s from client %s', msg, client.sessionId);
 
@@ -142,9 +152,7 @@ ws_server.on('connection', function(client) {
 	client.watchers.push(watcher);
   })
   client.on('disconnect', function() {
-	// there client should be removed from the list of client watching
-	// a given file
-	
+    // we destroy every watcher that we built
 	while(client.watchers.length) {
 	  client.watchers.pop().close();
 	}
