@@ -105,9 +105,9 @@ app.get('/', function(req, res, next) {
 // need a bit of express doc reading
 //
 // so for now it only works with aliases =)
-app.get('/:filename', function(req, res, next){
+app.get('/:filename', function(req, res, next) {
   filename = req.params.filename
-  res.render('index', {
+  res.render('file', {
     locals: {
       title: 'Log file watcher',
       filename: filename 
