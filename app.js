@@ -57,6 +57,8 @@ catch(e) {
  *	   <alias>: <path>
  *   }
  * }
+ *
+ * if no alias for a file is specified, then alias = path
  */
 
 var app = module.exports = express.createServer();
@@ -85,11 +87,16 @@ app.configure('production', function(){
 
 // default route for root page. without it, you get an error.
 app.get('/', function(req, res, next) {
+    // it's easier to pass an array of aliases than giving out
+    // the actual parameters.files object
+    var array = [];
+    for(var f in parameters.files)
+        array.push(f);
 	res.render('landing', {
 		layout: false,
 		locals: {
 			// i would like a list of files we're able to watch
-			files: parameters.files
+			files: array
 		}
 	})
 });
