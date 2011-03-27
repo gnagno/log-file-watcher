@@ -106,11 +106,11 @@ app.get('/', function(req, res, next) {
 //
 // so for now it only works with aliases =)
 app.get('/:filename', function(req, res, next) {
-  filename = req.params.filename
+  watched = req.params.filename
   res.render('file', {
     locals: {
       title: 'Log file watcher',
-      filename: filename 
+      watched: watched 
 	}
   });
 });
