@@ -2,8 +2,8 @@ h1= title
 p watching 
   em #{watched}
 form#filters
-  label(for:"filter-regex") regex
   input(type='checkbox', name="filter-regex", id="filter-regex")
+  label(for:"filter-regex") regex
   input(type="text", name="filter", id="filter")
   span.error
 .log-overflow
