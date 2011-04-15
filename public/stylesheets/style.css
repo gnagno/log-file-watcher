@@ -5,3 +5,17 @@ body {
 p.error {
   color: red;
 }
+
+.log-overflow {
+    overflow: hidden;
+}
+
+.log-overflow table.log.file-watcher {
+    font-family: monospace;
+    border-collapse: collapse;
+    border-bottom: 1px solid #dedede;
+}
+
+table.file-watcher td {
+    border-top: 1px solid #dedede;
+}

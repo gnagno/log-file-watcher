@@ -1,12 +1,5 @@
-function longpoll(filename){
-  $.ajax({
-    url: "poll/" + filename,
-    success: function(data){
-      $("#log").append(data);
-      longpoll(filename);
-    }
-  });
-};
+window.watcher = {};
+(function(watcher) {
 var host = window.document.location.hostname;
 var socket = new io.Socket(host, {
 	resource: 'watch',
@@ -31,8 +24,28 @@ socket.on('message', function(message) {
 });
 socket.on('message', function(message) {
   if(typeof message !== 'object') return;
+  socket.emit('file-'+message.file, [message.line || "&nbsp;"]);
   console.log('new line in %s: %s', message.file, message.line);
 });
 socket.on('disconnect', function() {
   console.log('disconnected');
 });
+watcher.socket = socket;
+
+watcher.setupLog = function setupLog(table, filename) {
+    var event = 'file-'+filename;
+    var overflow = table.parentNode || table.parentElement;
+    socket.on(event, function online(line) {
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.innerHTML = line;
+        tr.appendChild(td);
+        table.appendChild(tr);
+    });
+}
+
+watcher.setupSingleLog = function setupSingleLog (filename) {
+    var table = $(".log.file-watcher")[0];
+    watcher.setupLog(table, filename);
+}
+})(window.watcher);

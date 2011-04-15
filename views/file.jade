@@ -1,5 +1,9 @@
+script(type:"text/javascript") 
+  $(function() {
+     watcher.setupSingleLog("#{watched}");
+  })
 h1= title
 p watching 
   em #{watched}
-#log
-
+.log-overflow
+  table.log.file-watcher
