@@ -2,16 +2,32 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
-p.error {
+.error {
   color: red;
+}
+
+.hidden {
+    display: none;
 }
 
 .log-overflow {
     overflow: auto;
+    min-height: 2em;
     max-height: 20em;
+    font-family: arial;
+    color: gray;
+    position:relative;
+}
+
+.log-overflow .noline {
+    position: absolute;
+    z-index: -1;
+    top: 0;
 }
 
 .log-overflow table.log.file-watcher {
+    background: white;
+    color: black;
     font-family: monospace;
     font-size: 0.85em;
     white-space: nowrap;
@@ -21,4 +37,15 @@ p.error {
 
 table.file-watcher td {
     border-top: 1px solid #dedede;
+}
+
+table.file-watcher.filtered td {
+    display: none;
+}
+
+table.file-watcher.filtered td.match {
+    display: table-cell;   
+}
+table.file-watcher.filtered strong {
+    color: red;
 }

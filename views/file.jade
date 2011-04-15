@@ -1,9 +1,15 @@
+h1= title
+p watching 
+  em #{watched}
+form#filters
+  label(for:"filter-regex") regex
+  input(type='checkbox', name="filter-regex", id="filter-regex")
+  input(type="text", name="filter", id="filter")
+  span.error
+.log-overflow
+  table.log.file-watcher
+  .noline no line to display
 script(type:"text/javascript") 
   $(function() {
      watcher.setupSingleLog("#{watched}");
   })
-h1= title
-p watching 
-  em #{watched}
-.log-overflow
-  table.log.file-watcher
