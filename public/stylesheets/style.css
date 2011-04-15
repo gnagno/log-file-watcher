@@ -7,7 +7,8 @@ p.error {
 }
 
 .log-overflow {
-    overflow: hidden;
+    overflow: auto;
+    max-height: 20em;
 }
 
 .log-overflow table.log.file-watcher {
@@ -18,4 +19,5 @@ p.error {
 
 table.file-watcher td {
     border-top: 1px solid #dedede;
+    white-space: nowrap;
 }

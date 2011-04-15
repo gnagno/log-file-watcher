@@ -41,7 +41,16 @@ watcher.setupLog = function setupLog(table, filename) {
         td.innerHTML = line;
         tr.appendChild(td);
         table.appendChild(tr);
+        overflow.onnewline();
     });
+    // setup scrolling
+    var manualScroll = false;
+    overflow.onnewline = function() {
+        if(!manualScroll) this.scrollTop = this.scrollHeight;
+    }
+    $(overflow).scroll(function() {
+        manualScroll = ((this.offsetHeight + this.scrollTop) < this.scrollHeight);
+    })
 }
 
 watcher.setupSingleLog = function setupSingleLog (filename) {
