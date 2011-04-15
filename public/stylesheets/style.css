@@ -10,6 +10,10 @@ body {
     display: none;
 }
 
+form.filters label {
+    margin-right:1em;
+}
+
 .log-overflow {
     overflow: auto;
     min-height: 2em;
