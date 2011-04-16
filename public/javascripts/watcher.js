@@ -126,7 +126,8 @@ watcher.setFilter = function setFilter(table, form) {
         }
     }
     table.dofilter = dofilter;
-    $(filter).blur(dofilter).keyup(dofilter);
+    $(filter).blur(dofilter).keyup(dofilter).change(dofilter);
+    $(regex).change(dofilter);
 }
 
 function readRegExp (str) {

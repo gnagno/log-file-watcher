@@ -4,8 +4,9 @@ p watching
 form#filters.filters
   input(type='checkbox', name="filter-regex", id="filter-regex")
   label(for:"filter-regex") regex
-  input(type="text", name="filter", id="filter")
   span.error
+  br
+  input(type="text", name="filter", id="filter")
 .log-overflow
   table.log.file-watcher
   .noline no line to display

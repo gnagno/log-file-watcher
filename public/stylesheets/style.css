@@ -11,13 +11,22 @@ body {
 }
 
 form.filters label {
-    margin-right:1em;
+    margin: 0 1em;
+    font-size: 1.3em;
+}
+form.filters input[type=text] {
+    width: 100%;
+    /*height: 1.2em;*/
+    margin: 1em 0;
+    font-family: monospace;
+    font-size: 1.6em;
+    letter-spacing: -2px;
 }
 
 .log-overflow {
     overflow: auto;
     min-height: 2em;
-    max-height: 20em;
+    max-height: 30em;
     font-family: arial;
     color: gray;
     position:relative;
