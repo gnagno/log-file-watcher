@@ -93,8 +93,9 @@ app.get('/', function(req, res, next) {
     for(var f in parameters.files)
         array.push(f);
 	res.render('landing', {
-		layout: false,
+		//layout: false,
 		locals: {
+            title: "Welcome to the log watcher",
 			// i would like a list of files we're able to watch
 			files: array
 		}
