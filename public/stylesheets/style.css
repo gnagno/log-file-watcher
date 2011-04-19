@@ -39,6 +39,7 @@ form.filters input[type=text] {
 }
 
 .log-overflow table.log.file-watcher {
+    width: 100%;
     background: white;
     color: black;
     font-family: monospace;
