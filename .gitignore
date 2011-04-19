@@ -1,3 +1,5 @@
 # ignore vim files
 .*.swp
 .*.un~
+# ignore log files
+log
