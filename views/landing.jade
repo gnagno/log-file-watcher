@@ -1,11 +1,11 @@
 h1= "Welcome to the log watcher"
 - if (files.length)
   p Watchable files
-  ul.watchable
-  - each file in files
-    li: a(href: file) #{file}
+  ul#watchable
+    - each file in files
+      li: a(href: file) #{file}
 - else
   p.error.
     there are no files available to watch
 #loggers
-script(type:'text/javascript', src:'javascripts/landing.js') 
+// script(type:'text/javascript', src:'javascripts/landing.js') 

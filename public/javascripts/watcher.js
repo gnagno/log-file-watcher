@@ -1,5 +1,9 @@
 window.watcher = {};
 (function(watcher) {
+
+/**
+ * Open a websocket to the server
+ */
 var host = window.document.location.hostname;
 var socket = new io.Socket(host, {
 	resource: 'watch',
@@ -108,7 +112,7 @@ watcher.raw = function raw(table) {
 
 watcher.setFilter = function setFilter(table, form) {
     var filter = $(form).children('input[type=text]')[0];
-    var regex = $(form).children('input[name=filter-regex]')[0];
+    var regex = $(form).children('input[type=checkbox]')[0];
     var error = $(form).children('.error')[0];
     function dofilter() {
         error.innerHTML = "";
