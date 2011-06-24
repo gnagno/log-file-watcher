@@ -3,3 +3,4 @@
 .*.un~
 # ignore log files
 log
+node_modules
