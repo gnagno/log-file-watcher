@@ -3,7 +3,8 @@ h1= "Welcome to the log watcher"
   p Watchable files
   ul#watchable
     - each file in files
-      li: a(href: file) #{file}
+      li
+        a(href=file) #{file}
 - else
   p.error.
     there are no files available to watch
