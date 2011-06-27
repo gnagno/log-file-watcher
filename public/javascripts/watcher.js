@@ -102,7 +102,7 @@ watcher.filter = function filter(table, fun) {
     if(!nb) {
         $(noline).removeClass('hidden');
     }
-    counter.innerHTML = nb;
+    counter.innerText = nb;
 }
 watcher.raw = function raw(table) {
     $(table).removeClass('filtered');
@@ -115,7 +115,7 @@ watcher.raw = function raw(table) {
         row.innerHTML = row.rawLine;
         ++nb;
     }
-    counter.innerHTML = nb;
+    counter.innerText = nb;
 }
 
 watcher.setFilter = function setFilter(table, form) {
