@@ -23,6 +23,13 @@ form.filters input[type=text] {
     letter-spacing: -2px;
 }
 
+.counter {
+    position: relative;
+    top: -0.5em;
+    color: gray;
+}
+
+
 .log-overflow {
     overflow: auto;
     min-height: 2em;

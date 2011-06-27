@@ -7,9 +7,12 @@ form#filters.filters
   span.error
   br
   input(type="text", name="filter", id="filter")
+span.counter showing 
+  span#line-count 10  
+  |  lines
 .log-overflow
   table.log.file-watcher
-  .noline no line to display
+  .noline your query is too restrictive
 script(type:"text/javascript") 
   $(function() {
      watcher.setupSingleLog("#{watched}");

@@ -49,6 +49,8 @@ watcher.setupLog = function setupLog(table, filename) {
         overflow.onnewline();
         if($(table).hasClass('filtered')) {
             table.dofilter();
+        } else {
+            watcher.raw(table);
         }
     });
     // setup scrolling
@@ -82,6 +84,7 @@ watcher.filter = function filter(table, fun) {
     $(noline).addClass('hidden');
     $(table).addClass('filtered');
     var noline = table.nextSibling;
+    var counter = document.getElementById('line-count');
 
     var row,
         nb = 0,
@@ -99,15 +102,20 @@ watcher.filter = function filter(table, fun) {
     if(!nb) {
         $(noline).removeClass('hidden');
     }
+    counter.innerHTML = nb;
 }
 watcher.raw = function raw(table) {
     $(table).removeClass('filtered');
+    var counter = document.getElementById('line-count');
 
     var row,
+        nb = 0;
         next = logIterator(table);
     while(row = next()) {
         row.innerHTML = row.rawLine;
+        ++nb;
     }
+    counter.innerHTML = nb;
 }
 
 watcher.setFilter = function setFilter(table, form) {
