@@ -129,7 +129,7 @@ watcher.setFilter = function setFilter(table, form) {
             var match = regex.checked ? readRegExp(filter.value) :
                                         new RegExp(filter.value, 'gi');
             var nb = watcher.filter(table, function(str) {
-                if(match(str)) {
+                if(match.test(str)) {
                     return str.replace(match, "<strong>$&</strong>");
                 }
             })
