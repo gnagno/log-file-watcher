@@ -1,0 +1,23 @@
+{
+  "author": "",
+  "name": "log-file-watcher",
+  "description": "A web based tool for watching log files",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "main": "app.js",
+  "engines": {
+    "node": "0.4"
+  },
+  "dependencies": {
+    "express":"2.3",
+    "jade":"0.11",
+    "lines":"1.0",
+    "socket.io":"0.6"
+  },
+  "bin": {
+    "log-file-watcher": "./app.js"
+  },
+  "devDependencies": {}
+}

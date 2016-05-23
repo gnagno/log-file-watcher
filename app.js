@@ -38,13 +38,28 @@ try {
 		arguments.printUsage();
 		process.exit(0);
 	}
+	console.log('watching', parameters.files);
 }
 catch(e) {
-	console.log('could not parse arguments: %s', e.message);
-	arguments.printUsage();
-	process.exit(1);
+	if(e instanceof SyntaxError) {
+		console.log('could not parse arguments: %s', e.message);
+		arguments.printUsage();
+		process.exit(1);
+	}
+	console.log(e.message)
+	process.exit(2);
 }
-console.log('watching %s', sys.inspect(parameters.files));
+/**
+ * parameters is on object of this form
+ * {
+ *   port: <int:optional>
+ *   files: {
+ *	   <alias>: <path>
+ *   }
+ * }
+ *
+ * if no alias for a file is specified, then alias = path
+ */
 
 var app = module.exports = express.createServer();
 
@@ -53,11 +68,11 @@ var app = module.exports = express.createServer();
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
-  app.use(express.logger({format: ":method :url :date from :remote-addr :user-agent -> :status\n"}));
-  app.use(express.bodyDecoder());
+  app.use(express.logger({format: ":method :url :date from :remote-addr :user-agent -> :status"}));
+  app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(express.staticProvider(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.configure('development', function(){
@@ -72,10 +87,17 @@ app.configure('production', function(){
 
 // default route for root page. without it, you get an error.
 app.get('/', function(req, res, next) {
+    // it's easier to pass an array of aliases than giving out
+    // the actual parameters.files object
+    var array = [];
+    for(var f in parameters.files)
+        array.push(f);
 	res.render('landing', {
-		layout: false,
+		//layout: false,
 		locals: {
+            title: "Welcome to the log watcher",
 			// i would like a list of files we're able to watch
+			files: array
 		}
 	})
 });
@@ -84,12 +106,12 @@ app.get('/', function(req, res, next) {
 // need a bit of express doc reading
 //
 // so for now it only works with aliases =)
-app.get('/:filename', function(req, res, next){
-  filename = req.params.filename
-  res.render('index', {
+app.get('/:filename', function(req, res, next) {
+  watched = req.params.filename
+  res.render('file', {
     locals: {
       title: 'Log file watcher',
-      filename: filename 
+      watched: watched 
 	}
   });
 });
@@ -124,7 +146,7 @@ var LogWatcher = require('./lib/LogWatcher');
 ws_server.on('connection', function(client) {
   // there, client should be stored depending on what files they are
   // watching
-  client.watchers = [];
+  client.watchers = []; ///< a list of file watchers
   client.on('message', function(msg) {
 	console.log('got message %s from client %s', msg, client.sessionId);
 
@@ -138,9 +160,7 @@ ws_server.on('connection', function(client) {
 	client.watchers.push(watcher);
   })
   client.on('disconnect', function() {
-	// there client should be removed from the list of client watching
-	// a given file
-	
+    // we destroy every watcher that we built
 	while(client.watchers.length) {
 	  client.watchers.pop().close();
 	}

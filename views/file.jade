@@ -1,0 +1,19 @@
+h1= title
+p watching 
+  em #{watched}
+form#filters.filters
+  input(type='checkbox', name="filter-regex", id="filter-regex")
+  label(for:"filter-regex") regex
+  span.error
+  br
+  input(type="text", name="filter", id="filter")
+span.counter showing 
+  span#line-count 10  
+  |  lines
+.log-overflow
+  table.log.file-watcher
+  .noline your query is too restrictive
+script(type:"text/javascript") 
+  $(function() {
+     watcher.setupSingleLog("#{watched}");
+  })

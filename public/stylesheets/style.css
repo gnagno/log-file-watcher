@@ -2,3 +2,71 @@ body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
+.error {
+  color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+form.filters label {
+    margin: 0 1em;
+    font-size: 1.3em;
+}
+form.filters input[type=text] {
+    width: 100%;
+    /*height: 1.2em;*/
+    margin: 1em 0;
+    font-family: monospace;
+    font-size: 1.6em;
+    letter-spacing: -2px;
+}
+
+.counter {
+    position: relative;
+    top: -0.5em;
+    color: gray;
+}
+
+
+.log-overflow {
+    overflow: auto;
+    min-height: 2em;
+    max-height: 30em;
+    font-family: arial;
+    color: gray;
+    position:relative;
+}
+
+.log-overflow .noline {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+}
+
+.log-overflow table.log.file-watcher {
+    width: 100%;
+    background: white;
+    color: black;
+    font-family: monospace;
+    font-size: 0.85em;
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-bottom: 1px solid #dedede;
+}
+
+table.file-watcher td {
+    border-top: 1px solid #dedede;
+}
+
+table.file-watcher.filtered td {
+    display: none;
+}
+
+table.file-watcher.filtered td.match {
+    display: table-cell;   
+}
+table.file-watcher.filtered strong {
+    color: red;
+}

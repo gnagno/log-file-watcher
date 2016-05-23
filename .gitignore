@@ -1,3 +1,6 @@
 # ignore vim files
 .*.swp
 .*.un~
+# ignore log files
+log
+node_modules
